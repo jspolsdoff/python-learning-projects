@@ -7,7 +7,7 @@
 
 #Import Library
 import folium
-#from folium.plugins import MarkerCluster
+from folium.plugins import MarkerCluster
 import pandas as pd
 
 #Load Data
@@ -28,9 +28,12 @@ def color_change(elev):
 #Create base map
 map = folium.Map(location=[37.296933,-121.9574983], zoom_start = 5, tiles = "Mapbox bright")
 
-#Plot Markers
+#Create Cluster
+marker_cluster = MarkerCluster().add_to(map)
+
+#Plot Markers and add to 'marker_cluster'
 for lat, lon, elevation in zip(lat, lon, elevation):
-    folium.CircleMarker(location=[lat, lon], radius = 9, popup=str(elevation)+" m", fill_color=color_change(elevation), color="gray", fill_opacity = 0.9).add_to(map)
+    folium.CircleMarker(location=[lat, lon], radius = 9, popup=str(elevation)+" m", fill_color=color_change(elevation), color="gray", fill_opacity = 0.9).add_to(marker_cluster)
 
 #Save the map
 map.save("map1.html")
